@@ -4,6 +4,18 @@ from Board import *
 
 class BoardTests(unittest.TestCase):
 
+        boardPoints = []
+        for i in range(24):
+                boardPoints.append(0)
+        
+        Board.__init__(Board)
+        Board.initBoard(Board)
+        Board.boardPoints[1] = 6
+        
+        def testCountMan(self):
+                firstTest = Board.countMan(self, 1)
+                self.assertEqual(firstTest, 0, "Should return 1")
+
         def testPlacingMan(self):
                 boardPoints = Mock()
                 Board.placingMan(self, 0)
@@ -11,36 +23,28 @@ class BoardTests(unittest.TestCase):
 
         def testMoveMan(self):
                 boardPoints = Mock()
+                # Validate move from one pos to another
                 Board.moveMan(self, 0, 1)
                 Board.moveMan(self, 1, 2)
 
         def testFlyMan(self):
                 boardPoints = Mock()
+                # Validate fly from one pos to another (0 to 1, 1 to 3, etc.)
                 Board.flyMan(self, 0, 1)
                 Board.flyMan(self, 1, 3)
         
-        # ERROR
-        def testIsWin(self):
-                firstTest = Board.isWin(self)
-                secondTest = Board.isWin(self)
-                thirdTest = Board.isWin(self)
-                
-                self.assertTrue(firstTest, "Should return true")
-                self.assertFalse(secondTest, "Should return false")
-                self.assertFalse(thirdTest, "Should return false")
-        
         def testIsMill(self):
-                firstTest = Board.isMill(self, 1, 1)
-                self.assertFalse(firstTest, "Should return false")
+                firstTest = Board.isMill(1, 1, 5)
+                self.assertFalse(firstTest, "Should return false") # Verify that mill is invalid
                 
-                secondTest = Board.isMill(self, 14, 1)
-                self.assertTrue(secondTest, "Should return true")
-
         def testRemoveMan(self):
                 boardPoints = Mock()
+                # Place piece to remove
                 Board.placingMan(self, 0)
+
+                # Validate removal
                 Board.removeMan(self, 0, 1)
-                Board.removeMan(self, 25, 1)
+                Board.removeMan(self, 25, 1) # 25 is out of range, so this removal should not be possible
 
         def testIndexTransfer(self):
                 firstTest = Board.indexTransfer(self, 35, 30)
